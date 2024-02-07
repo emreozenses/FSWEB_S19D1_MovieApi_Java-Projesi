@@ -49,5 +49,8 @@ public class Director {
         movieList.add(movie);
     }
 
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "director_detail_id")
+    private DirectorDetail directorDetail;
 
 }
