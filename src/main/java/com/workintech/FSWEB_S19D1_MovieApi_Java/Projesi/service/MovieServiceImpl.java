@@ -2,15 +2,18 @@ package com.workintech.FSWEB_S19D1_MovieApi_Java.Projesi.service;
 
 import com.workintech.FSWEB_S19D1_MovieApi_Java.Projesi.converter.DtoConverter;
 import com.workintech.FSWEB_S19D1_MovieApi_Java.Projesi.dto.ActorResponse;
+import com.workintech.FSWEB_S19D1_MovieApi_Java.Projesi.dto.JustMovieResponse;
 import com.workintech.FSWEB_S19D1_MovieApi_Java.Projesi.dto.MovieRequest;
 import com.workintech.FSWEB_S19D1_MovieApi_Java.Projesi.dto.MovieResponse;
 import com.workintech.FSWEB_S19D1_MovieApi_Java.Projesi.entity.Actor;
 import com.workintech.FSWEB_S19D1_MovieApi_Java.Projesi.entity.Director;
 import com.workintech.FSWEB_S19D1_MovieApi_Java.Projesi.entity.Movie;
+import com.workintech.FSWEB_S19D1_MovieApi_Java.Projesi.exceptions.MovieException;
 import com.workintech.FSWEB_S19D1_MovieApi_Java.Projesi.repository.ActorRepository;
 import com.workintech.FSWEB_S19D1_MovieApi_Java.Projesi.repository.DirectorRepository;
 import com.workintech.FSWEB_S19D1_MovieApi_Java.Projesi.repository.MovieRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -34,7 +37,7 @@ public class MovieServiceImpl implements MovieService{
     @Override
     public MovieResponse save(Movie movie) {
 
-         return DtoConverter.convertToMovieResponse(movieRepository.save(movie));
+         return DtoConverter.convertToMovieRequestResponse(movieRepository.save(movie));
     }
 
     @Override
@@ -49,12 +52,12 @@ public class MovieServiceImpl implements MovieService{
         if(movieResponseOptional.isPresent()){
             return DtoConverter.convertToMovieResponse(movieResponseOptional.get());
         }
-        throw new RuntimeException("Id is not exist"+id);
+        throw new MovieException("Id is not exist"+id, HttpStatus.NOT_FOUND);
     }
 
     @Override
-    public List<MovieResponse> findByName(String name) {
-        return movieRepository.findByName(name);
+    public List<JustMovieResponse> findByName(String name) {
+        return DtoConverter.convertToJustMovieResponseList(movieRepository.findByName(name));
     }
 
     @Override
@@ -65,10 +68,11 @@ public class MovieServiceImpl implements MovieService{
             foundMovie.get().setRating(movie.getRating());
             foundMovie.get().setDirector(movie.getDirector());
             foundMovie.get().setReleaseDate(movie.getReleaseDate());
+            foundMovie.get().setActorList(movie.getActorList());
             Movie updatedMovie = foundMovie.get();
             return DtoConverter.convertToMovieResponse(movieRepository.save(updatedMovie));
         }
-        throw new RuntimeException("Id is not exist"+id);
+        throw new MovieException("Id is not exist"+id,HttpStatus.NOT_FOUND);
 
     }
 

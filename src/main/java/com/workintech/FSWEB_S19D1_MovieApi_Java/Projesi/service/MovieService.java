@@ -1,9 +1,6 @@
 package com.workintech.FSWEB_S19D1_MovieApi_Java.Projesi.service;
 
-import com.workintech.FSWEB_S19D1_MovieApi_Java.Projesi.dto.ActorMovieRequest;
-import com.workintech.FSWEB_S19D1_MovieApi_Java.Projesi.dto.ActorResponse;
-import com.workintech.FSWEB_S19D1_MovieApi_Java.Projesi.dto.MovieRequest;
-import com.workintech.FSWEB_S19D1_MovieApi_Java.Projesi.dto.MovieResponse;
+import com.workintech.FSWEB_S19D1_MovieApi_Java.Projesi.dto.*;
 import com.workintech.FSWEB_S19D1_MovieApi_Java.Projesi.entity.Actor;
 import com.workintech.FSWEB_S19D1_MovieApi_Java.Projesi.entity.Movie;
 
@@ -17,7 +14,7 @@ public interface MovieService {
 
     MovieResponse findById(long id);
 
-    List<MovieResponse> findByName(String name);
+    List<JustMovieResponse> findByName(String name);
 
     MovieResponse update (long id,Movie movie);
 

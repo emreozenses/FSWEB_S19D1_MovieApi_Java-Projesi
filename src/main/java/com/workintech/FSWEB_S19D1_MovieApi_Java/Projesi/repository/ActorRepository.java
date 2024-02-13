@@ -10,10 +10,10 @@ import java.util.List;
 
 public interface ActorRepository extends JpaRepository<Actor,Long> {
 
-    @Query(value = "SELECT a.id,a.first_name,a.last_name,a.gender,a.birth_date FROM fsweb.actor AS a WHERE a.name ILIKE %:name%",nativeQuery = true)
-    List<ActorResponse> findByName(String name);
+    @Query(value = "SELECT a.id,a.gender,a.first_name,a.last_name,a.birth_date FROM fsweb.actor AS a WHERE a.first_name ILIKE %:name%",nativeQuery = true)
+    List<Actor> findByName(String name);
 
-    @Query("SELECT a.id,a.firstName,a.lastName,a.gender,a.birthDate FROM Actor a ORDER BY a.birthDate ASC ")
-    List<ActorResponse> orderByBirthDateAsc();
+    @Query(value = "SELECT a.id,a.gender,a.first_name,a.last_name,a.birth_date FROM fsweb.actor AS a ORDER BY a.birth_date ASC ",nativeQuery = true)
+    List<Actor> orderByBirthDateAsc();
 
 }

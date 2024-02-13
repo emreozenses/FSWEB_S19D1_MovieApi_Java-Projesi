@@ -24,12 +24,22 @@ public class GlobalErrorHandler {
     }
 
     @ExceptionHandler
+    public ResponseEntity<MovieErrorResponse> movieErrorResponseResponseEntity (MovieException movieException){
+
+        MovieErrorResponse movieErrorResponse = new MovieErrorResponse(movieException.getMessage(), movieException.getHttpStatus().value(),LocalDateTime.now());
+        log.error("MovieException occured!",movieErrorResponse.toString());
+        return new ResponseEntity<>(movieErrorResponse,movieException.getHttpStatus());
+    }
+
+    @ExceptionHandler
     public ResponseEntity<GlobalErrorResponse> exceptionHandler (Exception exception){
 
         GlobalErrorResponse globalErrorResponse = new GlobalErrorResponse(exception.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR.value(),LocalDateTime.now() );
         log.error("Exception occured",exception.toString());
         return new ResponseEntity<>(globalErrorResponse, HttpStatusCode.valueOf(globalErrorResponse.getStatus()));
     }
+
+
 
 
 }

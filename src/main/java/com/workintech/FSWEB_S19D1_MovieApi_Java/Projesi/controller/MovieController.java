@@ -1,10 +1,8 @@
 package com.workintech.FSWEB_S19D1_MovieApi_Java.Projesi.controller;
 
-import com.workintech.FSWEB_S19D1_MovieApi_Java.Projesi.dto.ActorMovieRequest;
-import com.workintech.FSWEB_S19D1_MovieApi_Java.Projesi.dto.ActorResponse;
-import com.workintech.FSWEB_S19D1_MovieApi_Java.Projesi.dto.MovieRequest;
-import com.workintech.FSWEB_S19D1_MovieApi_Java.Projesi.dto.MovieResponse;
+import com.workintech.FSWEB_S19D1_MovieApi_Java.Projesi.dto.*;
 import com.workintech.FSWEB_S19D1_MovieApi_Java.Projesi.entity.Actor;
+import com.workintech.FSWEB_S19D1_MovieApi_Java.Projesi.entity.Director;
 import com.workintech.FSWEB_S19D1_MovieApi_Java.Projesi.entity.Movie;
 import com.workintech.FSWEB_S19D1_MovieApi_Java.Projesi.service.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,14 +34,26 @@ public class MovieController {
     }
 
     @GetMapping("/findByName/{name}")
-    public List<MovieResponse> findByName(@PathVariable String name){
+    public List<JustMovieResponse> findByName(@PathVariable String name){
         return movieService.findByName(name);
     }
 
     @PostMapping("/")
-    public MovieResponse save (@RequestBody Movie movie){
+    public MovieResponse save (@RequestBody MovieRequest movieRequest){
+        List<Actor> actorList = movieRequest.getActorList();
+        Movie movie = movieRequest.getMovie();
+        Director director = movieRequest.getDirector();
+        actorList.forEach(actor -> {
+            movie.addActor(actor);
+        });
+        director.addMovie(movie);
+        movie.setDirector(director);
+
         return movieService.save(movie);
     }
+
+
+
     @PostMapping("/addActor")
     public MovieResponse addActor (@RequestBody MovieRequest movieRequest){
         return movieService.addActor(movieRequest);
