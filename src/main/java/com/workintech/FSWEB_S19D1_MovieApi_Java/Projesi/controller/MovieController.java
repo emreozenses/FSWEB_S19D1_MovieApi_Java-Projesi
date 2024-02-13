@@ -13,7 +13,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/movie")
-@Validated
 public class MovieController {
 
     private MovieService movieService;
@@ -39,7 +38,7 @@ public class MovieController {
     }
 
     @PostMapping("/")
-    public MovieResponse save (@RequestBody MovieRequest movieRequest){
+    public MovieResponse save (@Validated @RequestBody MovieRequest movieRequest){
         List<Actor> actorList = movieRequest.getActorList();
         Movie movie = movieRequest.getMovie();
         Director director = movieRequest.getDirector();
@@ -55,13 +54,13 @@ public class MovieController {
 
 
     @PostMapping("/addActor")
-    public MovieResponse addActor (@RequestBody MovieRequest movieRequest){
+    public MovieResponse addActor (@Validated @RequestBody MovieRequest movieRequest){
         return movieService.addActor(movieRequest);
     }
 
 
     @PutMapping("/{id}")
-    public MovieResponse update(@PathVariable long id,@RequestBody Movie movie){
+    public MovieResponse update(@PathVariable long id,@Validated @RequestBody Movie movie){
         return movieService.update(id,movie);
 
     }
