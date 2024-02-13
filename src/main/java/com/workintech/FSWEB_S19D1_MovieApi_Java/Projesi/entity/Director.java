@@ -1,5 +1,6 @@
 package com.workintech.FSWEB_S19D1_MovieApi_Java.Projesi.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -25,7 +26,6 @@ public class Director {
 
 
     @Column(name = "director_name")
-    @NotNull
     @Size(min = 3,max = 50,message = "Input character length must be min. 3 ,max.50")
     private String directorName;
 
@@ -38,6 +38,7 @@ public class Director {
     @NotNull
     private LocalDate birthDate;
 
+    @JsonIgnore
     @OneToMany(cascade = {CascadeType.DETACH,CascadeType.MERGE,
             CascadeType.PERSIST,CascadeType.REFRESH},mappedBy = "director")
     private List<Movie> movieList;
@@ -48,6 +49,7 @@ public class Director {
         }
         movieList.add(movie);
     }
+
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "director_detail_id")

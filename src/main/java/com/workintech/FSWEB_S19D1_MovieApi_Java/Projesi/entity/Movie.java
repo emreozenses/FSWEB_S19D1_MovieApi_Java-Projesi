@@ -1,5 +1,6 @@
 package com.workintech.FSWEB_S19D1_MovieApi_Java.Projesi.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
@@ -41,9 +42,11 @@ public class Movie {
     @NotNull
     private LocalDate releaseDate;
 
+
     @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
-    @JoinColumn(name = "director_name")
+    @JoinColumn(name = "director_id")
     private Director director;
+
 
     @ManyToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinTable(name = "actor_movie", schema = "fsweb",

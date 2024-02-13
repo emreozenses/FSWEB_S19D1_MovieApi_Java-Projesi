@@ -45,7 +45,8 @@ public class Actor {
     @NotNull
     private LocalDate birthDate;
 
-    @ManyToMany(cascade = {CascadeType.DETACH,CascadeType.MERGE,CascadeType.PERSIST,CascadeType.REFRESH})
+    @ManyToMany(cascade = {CascadeType.DETACH,CascadeType.MERGE,
+            CascadeType.PERSIST,CascadeType.REFRESH})
     @JoinTable(name = "actor_movie",schema = "fsweb",
     joinColumns = @JoinColumn(name = "actor_id"),
     inverseJoinColumns = @JoinColumn(name = "movie_id"))

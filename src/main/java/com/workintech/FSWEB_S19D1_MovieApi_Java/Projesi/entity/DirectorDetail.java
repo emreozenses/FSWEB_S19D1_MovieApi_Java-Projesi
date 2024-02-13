@@ -29,7 +29,8 @@ public class DirectorDetail {
     @Size(min = 2,max = 100,message = "Input character length must be min. 3 ,max.100")
     private String hobbies;
 
-    @OneToOne(cascade = {CascadeType.DETACH,CascadeType.MERGE,CascadeType.PERSIST,CascadeType.REFRESH},mappedBy = "directorDetail")
+    @OneToOne(cascade = {CascadeType.DETACH,CascadeType.MERGE,
+            CascadeType.PERSIST,CascadeType.REFRESH},mappedBy = "directorDetail")
     private Director director;
 
 
